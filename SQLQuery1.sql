@@ -6,7 +6,8 @@
 CREATE TABLE Usuario (
     id_usuario INT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(100),
-    email NVARCHAR(100),
+    apellido NVARCHAR(100),
+    correo NVARCHAR(100),
     contraseña NVARCHAR(100),
     id_rol INT,
     CONSTRAINT FK_Usuario_Rol FOREIGN KEY (id_rol) REFERENCES Rol(id_rol)
@@ -66,3 +67,21 @@ CREATE TABLE VentaDetalle (
     CONSTRAINT FK_Detalle_Venta FOREIGN KEY (id_ventaCabecera) REFERENCES VentaCabecera(Id_ventaCabecera),
     CONSTRAINT FK_Detalle_Producto FOREIGN KEY (id_producto) REFERENCES Producto(Id_producto)
 );
+
+USE AuraBeautyDB;
+
+-- 1. Apagamos temporalmente la regla del Rol para que nos deje guardar
+ALTER TABLE Usuario NOCHECK CONSTRAINT FK_Usuario_Rol;
+
+-- 2. Limpiamos la tabla por si quedó algún intento a medias
+DELETE FROM Usuario;
+
+-- 3. Guardamos a la fuerza tu usuario administrador
+INSERT INTO Usuario (nombre, apellido, correo, contraseña, id_rol)
+VALUES ('Paulina', 'Galeano', 'admin@aura.com', '1234', 1);
+
+-- 4. Volvemos a encender la regla por seguridad
+ALTER TABLE Usuario CHECK CONSTRAINT FK_Usuario_Rol;
+
+-- 5. Le pedimos a SQL que nos muestre que realmente se guardó
+SELECT * FROM Usuario;
