@@ -21,9 +21,10 @@ namespace AuraBeauty
             IdRol = idRo;
         }
 
+        [Obsolete]
         public bool IniciarSesion(string correo, string contrasena)
         {
-            string connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=AuraBeautyDB;Integrated Security=True;";
+            string connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=BaseDeDatos;Integrated Security=True;";
             string query = "SELECT nombre, apellido, id_rol FROM Usuario WHERE correo = @correo AND contraseña = @contrasena";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
