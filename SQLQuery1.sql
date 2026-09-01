@@ -50,11 +50,13 @@ CREATE TABLE Producto (
 CREATE TABLE VentaCabecera (
     Id_ventaCabecera INT IDENTITY(1,1) PRIMARY KEY,
     id_cliente INT,
+    id_usuario INT,
     tipo_factura NVARCHAR(50),
     nro_factura NVARCHAR(50),
     total DECIMAL(10,2),
     fecha_venta DATETIME,
-    CONSTRAINT FK_Venta_Cliente FOREIGN KEY (id_cliente) REFERENCES Cliente(Id_cliente)
+    CONSTRAINT FK_Venta_Cliente FOREIGN KEY (id_cliente) REFERENCES Cliente(Id_cliente),
+    CONSTRAINT FK_Venta_Usuario FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 );
 
 CREATE TABLE VentaDetalle (
